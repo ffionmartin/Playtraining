@@ -12,5 +12,5 @@ unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/
 
 resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"  
 
-wartremoverErrors ++= Warts.unsafe
+//wartremoverErrors ++= Warts.unsafe
 

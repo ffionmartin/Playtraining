@@ -4,4 +4,4 @@ resolvers += "Typesafe repository" at "http://repo.typesafe.com/typesafe/release
 
 addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.5.16")
 
-addSbtPlugin("org.wartremover" % "sbt-wartremover" % "2.1.1")
+//addSbtPlugin("org.wartremover" % "sbt-wartremover" % "2.1.1")

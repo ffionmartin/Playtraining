@@ -1,0 +1,26 @@
+@(animals: Seq[Animal], form: Form[Animal])(implicit messages: Messages)
+
+@main("Animals") {
+
+    <h1>Animals</h1>
+    <table>
+        <thead>
+            <tr><th>animalType</th><th>Price</th>
+        </thead>
+        <tbody>
+        @for(animal <- animals) {
+            <tr><td>@animal.animalType</td><td>@animal.price</td></tr>
+        }
+        </tbody>
+    </table>
+
+    <hr/>
+
+    @helper.form(routes.Application.createAnimal) {
+        @helper.inputText(form("animalType"), 'id -> "SomeId", 'class -> "SomeClass")
+        @helper.inputText(form("price"))
+        <button type="submit">Create Animal</button>
+    }
+
+
+}
