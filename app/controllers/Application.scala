@@ -18,6 +18,10 @@ class Application @Inject()(val messagesApi: MessagesApi) extends Controller wit
     Ok(views.html.listAnimals(Animal.animals, Animal.createAnimalForm))
   }
 
+  def viewAnimals = Action { implicit request =>
+    Ok(views.html.viewAnimals(Animal.animals))
+  }
+
   def createAnimal = Action { implicit request =>
 
     val formValidationResult = Animal.createAnimalForm.bindFromRequest

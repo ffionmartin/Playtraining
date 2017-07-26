@@ -3,11 +3,12 @@
 # ~~~~
 
 # Home page
-# Home page
 GET     /                               controllers.Application.index
 
 GET     /animals                        controllers.Application.listAnimals
 POST    /animals                        controllers.Application.createAnimal
+
+GET     /view-animals                   controllers.Application.viewAnimals
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                   controllers.Assets.at(path="/public", file)
