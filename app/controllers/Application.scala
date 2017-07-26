@@ -33,4 +33,10 @@ class Application @Inject()(val messagesApi: MessagesApi) extends Controller wit
     })
   }
 
+  def updateAnimals = Action { implicit request =>
+
+    Ok(views.html.viewAnimals(Animal.animals))
+  }
+
+
 }

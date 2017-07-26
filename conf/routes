@@ -3,7 +3,7 @@
 # ~~~~
 
 # Home page
-GET     /                               controllers.Application.index
+GET     /home                           controllers.Application.index
 
 GET     /animals                        controllers.Application.listAnimals
 POST    /animals                        controllers.Application.createAnimal
