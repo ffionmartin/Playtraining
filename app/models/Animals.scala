@@ -5,7 +5,7 @@ import play.api.data.Forms._
 
 import scala.collection.mutable.ArrayBuffer
 
-case class Animal(animalType: String, price: Int, description: String, age: Int, seller: String)
+case class Animal(var animalType: String, var price: Int, var description: String, var age: Int, var seller: String)
 
 object Animal {
 
