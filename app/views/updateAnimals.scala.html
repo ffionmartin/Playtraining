@@ -1,30 +1,34 @@
 @(animals: Seq[Animal], form: Form[AnimalData])(implicit messages: Messages)
 
-@main("Animals") {
+@display(animal: Animal, index: Int) = {
+@animal.animalId <br/>
 
-    <h1>@if animals</h1>
-    <table>
-        <thead>
-            <tr><th>Animal Type</th><th>Price</th><th>Description</th><th>Age</th><th>Seller</th>
-        </thead>
-        <tbody>
-        @for(animal <- animals) {
-            <tr><td>@animal.animalId</td><td>@animal.animalType</td><td>@animal.price</td><td>@animal.description</td><td>@animal.age</td><td>@animal.seller</td></tr>
-        }
-        </tbody>
-    </table>
+    <a href="@routes.Application.editAnimal(index)">edit</a>
+}
+
+
+@main("Items") {
+
+    <h1>@if(animals.isEmpty) { No items } else { Animal }</h1>
+    <ul>
+    @for((animal, index) <- animals.zipWithIndex) {
+        <li>@display(animal, index)</li>
+    }
+    </ul>
 
     <hr/>
 
-    @helper.form(routes.Application.editAnimal()) {
-        @helper.inputText(form("animalId"), 'id -> "SomeId", 'class -> "SomeClass")
-        @helper.inputText(form("animalType"), 'id -> "SomeId", 'class -> "SomeClass")
+    @helper.form(action = routes.Application.createAnimal(), 'enctype -> "multipart/form-data") {
+        <input type="hidden" name="index" value="0"/>
+
+        @helper.inputText(form("animalId"))
+        @helper.inputText(form("animalType"))
         @helper.inputText(form("price"))
-        @helper.inputText(form("description"), 'info -> "SomeInfo", 'class -> "SomeClass")
+        @helper.inputText(form("description"))
         @helper.inputText(form("age"))
-        @helper.inputText(form("seller"), 'sellerId -> "SomeSellerId", 'class -> "SomeClass")
-        <button type="button">Update Animal</button>
+        @helper.inputText(form("seller"))
+
+        <button type="submit">create animal</button>
+
     }
-
-
 }

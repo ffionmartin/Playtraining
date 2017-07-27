@@ -5,15 +5,26 @@ import javax.inject.Inject
 import models.Animal
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc._
+import play.modules.reactivemongo._
+import reactivemongo.play.json._
+import scala.concurrent.Future
+import play.api.libs.concurrent.Execution.Implicits.defaultContext
+import collection._
 
-class Application @Inject()(val messagesApi: MessagesApi) extends Controller with I18nSupport {
+
+class Application @Inject()(val messagesApi: MessagesApi, val reactiveMongoApi: ReactiveMongoApi)
+                              extends Controller with I18nSupport with MongoController with ReactiveMongoComponents {
+
+  def collection: Future[JSONCollection] = database.map(_.collection[JSONCollection]("animal"))
+
+
 
   def index = Action {
     Ok(views.html.index("Your new application is ready."))
   }
 
   def listAnimals = Action { implicit request =>
-    Ok(views.html.listAnimals(Animal.animals, Animal.createAnimalForm))
+    Ok(views.html.listAnimals(Animal.animalFormat, Animal.createAnimalForm))
   }
 
   def createAnimal = Action { implicit request =>
@@ -27,7 +38,7 @@ class Application @Inject()(val messagesApi: MessagesApi) extends Controller wit
     })
   }
 
-  def updateAnimal = Action { implicit request =>
+  def editAnimal (index: Int) = Action { implicit request =>
     val formValidationResult = Animal.createAnimalForm.bindFromRequest
     formValidationResult.fold({ formWithErrors =>
       BadRequest(views.html.listAnimals(Animal.animals, formWithErrors))

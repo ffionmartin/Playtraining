@@ -16,6 +16,8 @@
 
     <hr/>
 
+    @if
+
     @helper.form(routes.Application.createAnimal) {
 
         @helper.inputText(form("animalId"), 'id -> "SomeId", 'class -> "SomeClass")
