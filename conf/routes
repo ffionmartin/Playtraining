@@ -8,7 +8,7 @@ GET     /home                           controllers.Application.index
 GET     /animals                        controllers.Application.listAnimals
 POST    /animals                        controllers.Application.createAnimal
 
-GET     /update-animals                 controllers.Application.updateAnimal
+GET     /update-animals                 controllers.Application.editAnimal
 #POST    /update-animals                 controllers.Application.updateAnimal
 
 

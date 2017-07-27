@@ -34,6 +34,24 @@ class Application @Inject()(val messagesApi: MessagesApi) extends Controller wit
     }, { animal =>
       println(animal.animalType)
       val indexOfAnimal = Animal.animals.indexWhere(e => e.animalType.equalsIgnoreCase(animal.animalType))
+      Animal.animals(indexOfAnimal).animalId = animal.animalId
+      Animal.animals(indexOfAnimal).animalType = animal.animalType
+      Animal.animals(indexOfAnimal).price = animal.price
+      Animal.animals(indexOfAnimal).description = animal.description
+      Animal.animals(indexOfAnimal).age = animal.age
+      Animal.animals(indexOfAnimal).seller = animal.seller
+      Redirect(routes.Application.listAnimals())
+    })
+  }
+
+  def deleteAnimal = Action { implicit request =>
+    val formValidationResult = Animal.createAnimalForm.bindFromRequest
+    formValidationResult.fold({ formWithErrors =>
+      BadRequest(views.html.listAnimals(Animal.animals, formWithErrors))
+    }, { animal =>
+      println(animal.animalType)
+      val indexOfAnimal = Animal.animals.indexWhere(e => e.animalType.equalsIgnoreCase(animal.animalType))
+      Animal.animals(indexOfAnimal).animalId = animal.animalId
       Animal.animals(indexOfAnimal).animalType = animal.animalType
       Animal.animals(indexOfAnimal).price = animal.price
       Animal.animals(indexOfAnimal).description = animal.description
