@@ -1,34 +1,35 @@
-@(animals: Seq[Animal], form: Form[AnimalData])(implicit messages: Messages)
+@*@(animals: Seq[Animal], form: Form[Animal])(implicit messages: Messages)*@
 
-@display(animal: Animal, index: Int) = {
-@animal.animalId <br/>
+@*@display(animal: Animal, index: Int) = {*@
+    @*@animal.animalId <br/>*@
+    @*<a href="@routes.Application.editAnimal(index)">edit</a>*@
+@*}*@
 
-    <a href="@routes.Application.editAnimal(index)">edit</a>
-}
 
+@*@main("Animals") {*@
 
-@main("Items") {
+    @*<h1>@if(animals.isEmpty) { No items }</h1>*@
+    @*<ul>*@
+    @*@if(animals.isEmpty) {*@
+        @*@for((animal, index) <- animals.zipWithIndex) {*@
+        @*<li>@display(animal, index)</li>*@
+        @*}*@
+    @*}*@
+    @*</ul>*@
 
-    <h1>@if(animals.isEmpty) { No items } else { Animal }</h1>
-    <ul>
-    @for((animal, index) <- animals.zipWithIndex) {
-        <li>@display(animal, index)</li>
-    }
-    </ul>
+    @*<hr/>*@
 
-    <hr/>
+    @*@helper.form(action = routes.Application.editAnimal(), 'enctype -> "multipart/form-data") {*@
+        @*<input type="hidden" name="index" value="0"/>*@
 
-    @helper.form(action = routes.Application.createAnimal(), 'enctype -> "multipart/form-data") {
-        <input type="hidden" name="index" value="0"/>
+        @*@helper.inputText(form("animalId"))*@
+        @*@helper.inputText(form("animalType"))*@
+        @*@helper.inputText(form("price"))*@
+        @*@helper.inputText(form("description"))*@
+        @*@helper.inputText(form("age"))*@
+        @*@helper.inputText(form("seller"))*@
 
-        @helper.inputText(form("animalId"))
-        @helper.inputText(form("animalType"))
-        @helper.inputText(form("price"))
-        @helper.inputText(form("description"))
-        @helper.inputText(form("age"))
-        @helper.inputText(form("seller"))
+        @*<button type="submit">create animal</button>*@
 
-        <button type="submit">create animal</button>
-
-    }
-}
+    @*}*@
+@*}*@

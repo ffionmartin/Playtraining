@@ -12,6 +12,6 @@ unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/
 
 resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
 
-libraryDependencies ++= Seq("org.reactivemongo" %% "play2-reactivemongo" % "0.12.5-play25")
+libraryDependencies +=  "org.reactivemongo" %% "play2-reactivemongo" % "0.12.5-play25"
 
 unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )
