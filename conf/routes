@@ -3,15 +3,19 @@
 # ~~~~
 
 # Home page
-GET     /home                           controllers.Application.index
+GET         /home                           controllers.Application.index
 
-GET     /animals                        controllers.Application.listAnimals
-POST    /animals                        controllers.Application.createAnimal
+GET         /animals                        controllers.Application.listAnimals
+POST        /animals                        controllers.Application.createAnimal
 
-#GET     /update-animals                 controllers.Application.editAnimal(index: Int)
-#POST    /update-animals                 controllers.Application.updateAnimal
-
+GET         /createanimal                   controllers.Application.createAnimal
+GET         /findanimal                     controllers.Application.listAnimals
+GET         /updateanimal                   controllers.Application.updateAnimal
+GET         /removeanimal                   controllers.Application.removeAnimal
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                   controllers.Assets.at(path="/public", file)
+
+
+
 

@@ -4,7 +4,7 @@ import javax.inject.Inject
 
 import models._
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc._
+import play.api.mvc.{AnyContent, _}
 import play.modules.reactivemongo._
 import reactivemongo.play.json._
 import scala.concurrent.Future
@@ -12,7 +12,9 @@ import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import collection._
 import play.api.libs.json._
 import reactivemongo.api.Cursor
+import reactivemongo.bson.BSONDocument
 import reactivemongo.play.json._
+import models.JsonFormats._
 
 class Application @Inject()(val messagesApi: MessagesApi, val reactiveMongoApi: ReactiveMongoApi)
                               extends Controller with I18nSupport with MongoController with ReactiveMongoComponents {
@@ -32,18 +34,51 @@ class Application @Inject()(val messagesApi: MessagesApi, val reactiveMongoApi: 
 
   def listAnimals: Action[AnyContent] = Action.async {
     val cursor: Future[Cursor[Animal]] = collection.map {
-      _.find(Json.obj("Animal Id" -> "animalId"))
+      _.find(Json.obj())
         .sort(Json.obj("created" -> -1))
         .cursor[Animal]
     }
     val futureAnimalsList: Future[List[Animal]] = cursor.flatMap(_.collect[List]())
     futureAnimalsList.map { animals =>
-      Ok(animals.head.toString)
+      Ok(animals.mkString(" "))
     }
   }
 
+  def updateAnimal: Action[AnyContent] = Action.async {
+    val animal = Animal("777333", "cat", 99, "English Short Hair", 3, "Lucy")
+    val selector = BSONDocument("animalId" -> "123456")
+    val futureResult = collection.map(_.findAndUpdate(selector, animal))
+    futureResult.map(_ => Ok("Updated animal"))
+  }
+
+  def removeAnimal: Action[AnyContent] = Action.async {
+    val futureResult = collection.map {
+      _.findAndRemove(Json.obj("animalId" -> "123456"))
+    }
+    futureResult.map(_ => Ok("Deleted animal"))
+  }
+
+}
 
 
+
+//    def editAnimal(index: Int): Action[AnyContent] = Action.async {
+//      val editAnimal = Animal.createAnimalForm.bindFromRequest
+//      formValidationResult.fold({ formWithErrors =>
+//        BadRequest(views.html.listAnimals(Animal.animals, formWithErrors))
+//      }, { animal =>
+//        println(animal.animalType)
+//        val indexOfAnimal = Animal.animals.indexWhere(e => e.animalType.equalsIgnoreCase(animal.animalType))
+//        Animal.animals(indexOfAnimal).animalId = animal.animalId
+//        Animal.animals(indexOfAnimal).animalType = animal.animalType
+//        Animal.animals(indexOfAnimal).price = animal.price
+//        Animal.animals(indexOfAnimal).description = animal.description
+//        Animal.animals(indexOfAnimal).age = animal.age
+//        Animal.animals(indexOfAnimal).seller = animal.seller
+//        Redirect(routes.Application.listAnimals())
+//      })
+//    }
+//
 
 
 //
@@ -98,6 +133,6 @@ class Application @Inject()(val messagesApi: MessagesApi, val reactiveMongoApi: 
 //      Redirect(routes.Application.listAnimals())
 //    })
 //  }
-}
+
 
 
