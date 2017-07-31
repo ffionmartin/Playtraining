@@ -21,7 +21,7 @@ package models {
 
     import play.api.libs.json.Json
 
-    implicit val itemDataFormat: OFormat[Animal] = Json.format[Animal]
+    implicit val animalDataFormat: OFormat[Animal] = Json.format[Animal]
 
     val createAnimalForm: Form[Animal] = Form(
       mapping(

@@ -40,11 +40,12 @@ class Application @Inject()(val messagesApi: MessagesApi, val reactiveMongoApi: 
     }
     val futureAnimalsList: Future[List[Animal]] = cursor.flatMap(_.collect[List]())
     futureAnimalsList.map { animals =>
-      Ok(animals.mkString(" "))
+//      Ok(animals.mkString(" "))
+      Ok(views.html.listAnimals(animals, JsonFormats.createAnimalForm))
     }
   }
 
-  def updateAnimal: Action[AnyContent] = Action.async {
+  def updateAnimal : Action[AnyContent] = Action.async {
     val animal = Animal("777333", "cat", 99, "English Short Hair", 3, "Lucy")
     val selector = BSONDocument("animalId" -> "123456")
     val futureResult = collection.map(_.findAndUpdate(selector, animal))
