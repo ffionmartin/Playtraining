@@ -8,6 +8,7 @@ package models {
   import scala.collection.mutable.ArrayBuffer
 
   case class Animal(
+                     index: Option[Int],
                      animalId: String,
                      animalType: String,
                      price: Int,
@@ -25,6 +26,7 @@ package models {
 
     val createAnimalForm: Form[Animal] = Form(
       mapping(
+        "index" -> optional(number),
         "animalId" -> nonEmptyText,
         "animalType" -> nonEmptyText,
         "price" -> number(min = 0, max = 100),

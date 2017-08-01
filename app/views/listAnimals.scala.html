@@ -1,13 +1,13 @@
 @(animals: Seq[Animal], form: Form[Animal])(implicit messages: Messages)
 
 @display(animal: Animal, index: Int) = {
-@animal.animalId <br/>
+    @animal.description <a href="@routes.Application.findByIndex(index)">edit</a><br/>
 }
 
 
 @main("Animals") {
 
-    <h1>@if(animals.isEmpty) { No animals } else { Animals }</h1>
+    <h1>@if(animals.isEmpty) {No animals} else {Animals}</h1>
     <ul>
     @for((animal, index) <- animals.zipWithIndex) {
         <li>@display(animal, index)</li>
