@@ -1,20 +1,26 @@
 @(animals: Seq[Animal], form: Form[Animal])(implicit messages: Messages)
 
-@display(animal: Animal, index: Int) = {
-    @animal.description <a href="@routes.Application.findByIndex(index)">edit</a><br/>
+@display(animal: Animal) = {
+    @animal.description <a href="@routes.Application.findByIndex(animal.index.get)">edit</a><br/>
 }
 
 
+@index = @{
+    if (animals.size > 0) {
+        form.data.getOrElse("index", animals.last.index.get +1)
+    } else {
+        0
+    }
+}
+
 @main("Animals") {
 
-    <h1>@if(animals.isEmpty) {No animals} else {Animals}</h1>
+    <h1>@if(animals.isEmpty) { No animals } else { Animals }</h1>
     <ul>
-    @for((animal, index) <- animals.zipWithIndex) {
-        <li>@display(animal, index)</li>
+    @for(animal <- animals) {
+        <li>@display(animal)</li>
     }
     </ul>
-
-    <hr/>
 
     @helper.form(action = routes.Application.createAnimal(), 'enctype -> "multipart/form-data") {
         <input type="hidden" name="index" value="@form.data.getOrElse("index", animals.size)"/>
@@ -31,51 +37,13 @@
 }
 
 
-
-@*@(animals: Seq[Animal], form: Form[Animal])(implicit messages: Messages)*@
-
 @*@main("Animals") {*@
 
-    @*<h1>Animals</h1>*@
-    @*<table>*@
-        @*<thead>*@
-            @*<tr><th>animal Id</th><th>Price</th></tr>*@
-        @*</thead>*@
-        @*<tbody>*@
-        @*@for(animal <- animals) {*@
-            @*<tr><td>@animal.animalId</td><td>@animal.price</td></tr>*@
-        @*}*@
-        @*</tbody>*@
-    @*</table>*@
-
-    @*<hr/>*@
-
-
-
-    @*@helper.form(routes.Application.createAnimal()) {*@
-
-        @*@helper.inputText(form("animalId"), '_label -> "animal Id", '_showConstraints -> false)*@
-        @*@helper.inputText(form("price"), '_label -> "Price" , '_showConstraints -> false)*@
-        @*<button type="submit">Create Animal</button>*@
+    @*<h1>@if(animals.isEmpty) {No animals} else {Animals}</h1>*@
+    @*<ul>*@
+    @*@for((animal, index) <- animals.zipWithIndex) {*@
+        @*<li>@display(animal, index)</li>*@
     @*}*@
+@*</ul>*@
 
-    @*<form action="/animals" method="POST">*@
-    @*<dl class=" " id="animalId_field">*@
-    @*<dt><label for="animalId">animalID</label></dt>*@
-    @*<dd>*@
-    @*<input type="text" id="animalId" name="animalId" value="">*@
-    @*</dd>*@
-    @*</dl>*@
-    @*<dl class=" " id="price_field">*@
-    @*<dt><label for="price">Price</label></dt>*@
-    @*<dd>*@
-    @*<input type="text" id="price" name="price" value="">*@
-    @*</dd>*@
-    @*</dl>*@
-    @*<button type="submit">Create Animal</button>*@
-    @*</form>*@
-@*}*@
-
-
-
-
+@*<hr/>*@

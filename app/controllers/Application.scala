@@ -37,15 +37,18 @@ class Application @Inject()(val messagesApi: MessagesApi, environment: play.api.
     } yield (all, one)
 
     futures.map {
-      case (all, one) => Ok(views.html.listAnimals(all, JsonFormats.createAnimalForm.fill(one.head)))
+      case (all, one) => {
+        println("one size is " + one.size)
+        Ok(views.html.listAnimals(all, JsonFormats.createAnimalForm.fill(one.head)))
+      }
 
     }
-
   }
 
   private def getResults(selector: JsObject): Future[List[Animal]] = {
     val cursor: Future[Cursor[Animal]] = collection.map {
-      _.find(selector).
+      _.find(selector)
+        .sort(Json.obj("index" -> 1)).
         cursor[Animal]
     }
     cursor.flatMap(_.collect[List]())
@@ -73,10 +76,13 @@ class Application @Inject()(val messagesApi: MessagesApi, environment: play.api.
         case "delete" if animal.index.get != -1 => collection.flatMap(_.remove(selector))
         case _ => collection.flatMap(_.insert(animal))
       }
-      futureResult.map(_ => Redirect(routes.Application.listAnimals))
+      futureResult.map(_ => {
+//        println("about to redirect...")
+        Redirect(routes.Application.listAnimals)
+      })
 
 
-      Future(Redirect(routes.Application.listAnimals))
+//      Future(Redirect(routes.Application.listAnimals))
     })
   }
 }
