@@ -3,7 +3,7 @@
 # ~~~~
 
 # Home page
-GET         /home                           controllers.Application.index
+GET         /home                               controllers.Application.index
 
 GET         /animals                            controllers.Application.listAnimals
 POST        /create-animal                      controllers.Application.createAnimal
@@ -12,7 +12,7 @@ GET         /load                               controllers.Application.findByIn
 
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file                       controllers.Assets.at(path="/public", file)
+GET     /assets/*file                           controllers.Assets.at(path="/public", file)
 
 
 
