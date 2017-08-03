@@ -1,0 +1,4 @@
+home.title = Homepage
+messages("home.welcomemessage", user.firstName, user.daysSinceLastLogin)
+info.error = you aren''t logged in! 
+example.formatting = When using MessageFormat, '{0}' is replaced with the first parameter."

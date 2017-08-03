@@ -25,6 +25,12 @@ class Application @Inject()(val messagesApi: MessagesApi, environment: play.api.
 
   def collection: Future[JSONCollection] = database.map(_.collection[JSONCollection]("animals"))
 
+  def hello(name: String): Action[AnyContent] = Action { request =>
+    Ok("Hello " + name).withSession("name" -> name)
+  }
+
+
+
   def index = Action {
     Ok(views.html.index("Your new application is ready."))
   }

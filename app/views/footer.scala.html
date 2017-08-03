@@ -1,0 +1,10 @@
+@()(implicit  message: Messages, lang: Lang, request:RequestHeader)
+
+
+<p>Current = @lang</p>
+<p>Title: @message("home.title")</p>
+<ul>
+    <li><a href="@routes.LanguageController.switchToLanguage("en", request.uri)" >English </a></li>
+    <li><a href="@routes.LanguageController.switchToLanguage("fr", request.uri)" >French </a></li>
+
+</ul>
