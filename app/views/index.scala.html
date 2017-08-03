@@ -5,3 +5,32 @@
     @play20.welcome(message)
 
 }
+
+
+
+
+@*@()*@
+@*@main("Login") {*@
+    @*<div data-ng-app="" data-ng-controller="LoginController">*@
+        @*<h1>Login Form</h1>*@
+        @*<form role="form"*@
+        @*data-ng-submit="postLoginForm('@routes.Application.index', '@routes.Auth.welcome')">*@
+            @*<div class="form-group">*@
+                @*<label for="username">Username</label>*@
+                @*<input class="form-control" data-ng-model="username"*@
+                @*data-ng-change="feedback = ''" autofocus>*@
+            @*</div>*@
+            @*<div class="form-group">*@
+                @*<label for="password">Password</label>*@
+                @*<input class="form-control" data-ng-model="password"*@
+                @*type="password" data-ng-change="feedback = ''">*@
+            @*</div>*@
+            @*<input type="submit" value="Login">*@
+        @*</form>*@
+        @*<div class="alert alert-danger well" data-ng-show="feedback != ''">*@
+            @*{{ feedback }} !*@
+        @*</div>*@
+    @*</div>*@
+    @*<script type="text/javascript"*@
+    @*src="@routes.Assets.at("javascripts/login.js")"></script>*@
+@*}*@

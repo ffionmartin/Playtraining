@@ -29,7 +29,7 @@ class Application @Inject()(val messagesApi: MessagesApi, environment: play.api.
     Ok(views.html.index("Your new application is ready."))
   }
 
-  def findByIndex(index: Int) = Action.async { implicit request =>
+  def findByIndex(index: Int): Action[AnyContent] = Action.async { implicit request =>
 
     val futures = for {
       all <- getResults(Json.obj())
@@ -37,9 +37,9 @@ class Application @Inject()(val messagesApi: MessagesApi, environment: play.api.
     } yield (all, one)
 
     futures.map {
-      case (all, one) => {
-        println("one size is " + one.size)
-        Ok(views.html.listAnimals(all, JsonFormats.createAnimalForm.fill(one.head)))
+      case (a, b) => {
+        //println("one size is " + a.size)
+        Ok(views.html.listAnimals(a, JsonFormats.createAnimalForm.fill(b.head)))
       }
 
     }
@@ -62,7 +62,7 @@ class Application @Inject()(val messagesApi: MessagesApi, environment: play.api.
   }
 
   def createAnimal = Action.async(parse.multipartFormData) { implicit request =>
-    val postAction = request.body.asFormUrlEncoded.get("action").get(0)
+    val postAction = request.body.asFormUrlEncoded("action")(0)
     val boundForm = JsonFormats.createAnimalForm.bindFromRequest
     boundForm.fold({ formWithErrors =>
       getResults(Json.obj()).map { animals =>
@@ -76,15 +76,13 @@ class Application @Inject()(val messagesApi: MessagesApi, environment: play.api.
         case "delete" if animal.index.get != -1 => collection.flatMap(_.remove(selector))
         case _ => collection.flatMap(_.insert(animal))
       }
-      futureResult.map(_ => {
-//        println("about to redirect...")
-        Redirect(routes.Application.listAnimals)
-      })
+      futureResult.map(_ =>
+        //        println("about to redirect...")
+        Redirect(routes.Application.listAnimals))
 
-
-//      Future(Redirect(routes.Application.listAnimals))
     })
   }
 }
+
 
 
