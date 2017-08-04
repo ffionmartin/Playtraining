@@ -1,5 +1,5 @@
 home.title=Page d'accueil
-info.error=you aren''t logged in! 
+info.error=toi Ne sont pas connecté dans! 
 example.formatting=When using MessageFormat, '{0}' is replaced with the first parameter."
 animalID=Animal ID
 animalType= Animal Espèce
