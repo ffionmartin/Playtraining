@@ -5,7 +5,7 @@
 # Home page
 GET         /login                              controllers.Application.index
 
-GET         /hello                              controllers.Application.hello
+#GET         /hello                              controllers.Application.hello
 
 GET         /animals                            controllers.Application.listAnimals
 POST        /create-animal                      controllers.Application.createAnimal

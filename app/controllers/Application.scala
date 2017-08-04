@@ -2,22 +2,18 @@ package controllers
 
 import javax.inject.Inject
 
+import models.JsonFormats._
 import models._
 import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.libs.concurrent.Execution.Implicits.defaultContext
+import play.api.libs.json._
 import play.api.mvc.{AnyContent, _}
 import play.modules.reactivemongo._
-import reactivemongo.play.json._
-
-import scala.concurrent.Future
-import play.api.libs.concurrent.Execution.Implicits.defaultContext
-import collection._
-import play.api.libs.json._
 import reactivemongo.api.Cursor
 import reactivemongo.bson.BSONDocument
 import reactivemongo.play.json._
-import models.JsonFormats._
-import play.api.data.Form
-import play.api.libs.Files
+import reactivemongo.play.json.collection._
+import scala.concurrent.Future
 
 class Application @Inject()(val messagesApi: MessagesApi, environment: play.api.Environment, val reactiveMongoApi: ReactiveMongoApi) extends Controller
   with I18nSupport with MongoController with ReactiveMongoComponents {
@@ -25,13 +21,13 @@ class Application @Inject()(val messagesApi: MessagesApi, environment: play.api.
 
   def collection: Future[JSONCollection] = database.map(_.collection[JSONCollection]("animals"))
 
-  def hello(name: String): Action[AnyContent] = Action { request =>
+  def hello(name: String): Action[AnyContent] = Action { implicit request =>
     Ok("Hello " + name).withSession("name" -> name)
   }
 
 
 
-  def index = Action {
+  def index = Action { implicit request =>
     Ok(views.html.index("Your new application is ready."))
   }
 

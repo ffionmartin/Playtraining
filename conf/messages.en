@@ -1,0 +1,11 @@
+home.title=Homepage
+info.error=you aren''t logged in! 
+example.formatting=When using MessageFormat, '{0}' is replaced with the first parameter."
+animalID=Animal ID
+animalType= Animal Type
+price=Price
+description=Description
+age=Age
+seller=Seller
+save=Save
+delete=Delete

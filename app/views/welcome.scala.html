@@ -1,4 +1,4 @@
-@(username:String)
+@(username:String)(implicit messages: Messages, request: RequestHeader)
 
 @main(s"Welcome $User") {
     <h1>Welcome @User</h1>

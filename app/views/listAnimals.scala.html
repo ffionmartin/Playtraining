@@ -1,4 +1,4 @@
-@(animals: Seq[Animal], form: Form[Animal])(implicit messages: Messages)
+@(animals: Seq[Animal], form: Form[Animal])(implicit messages: Messages, lang: Lang, request: RequestHeader)
 
 @display(animal: Animal) = {
     @animal.description <a href="@routes.Application.findByIndex(animal.index.get)">edit</a><br/>
@@ -9,6 +9,7 @@
     if (animals.size > 0) {
         form.data.getOrElse("index", animals.last.index.get +1)
     } else {
+        0
         0
     }
 }
@@ -24,14 +25,14 @@
 
     @helper.form(action = routes.Application.createAnimal(), 'enctype -> "multipart/form-data") {
         <input type="hidden" name="index" value="@form.data.getOrElse("index", animals.size)"/>
-        @helper.inputText(form("animalId"))
-        @helper.inputText(form("animalType"))
-        @helper.inputText(form("price"))
-        @helper.inputText(form("description"))
-        @helper.inputText(form("age"))
-        @helper.inputText(form("seller"))
-        <button type="submit" name="action" value="save">save</button>
-        <button type="submit" name="action" value="delete">delete</button>
+        @helper.inputText(form(messages("animalID")))
+        @helper.inputText(form(messages("animalType")))
+        @helper.inputText(form(messages("price")))
+        @helper.inputText(form(messages("description")))
+        @helper.inputText(form(messages("age")))
+        @helper.inputText(form(messages("seller")))
+        <button type="submit" name="action" value="save">@messages("save")</button>
+        <button type="submit" name="action" value="delete">@messages("delete")</button>
     }
 
 }
